@@ -1,1 +1,169 @@
 /* Add your own styles */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --deep-sea: #0f2b3d;
+  --chart-paper: #e6eef0;
+  --graticule: #c3d4da;
+  --shallows: #1f6f7d;
+  --buoy: #e8590c;
+  --table-bg: #fbfdfd;
+  --ink: #17313f;
+  --ink-soft: #55707d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Instrument Sans', 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background-color: var(--chart-paper);
+  /* latitude and longitude lines */
+  background-image:
+    linear-gradient(var(--graticule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--graticule) 1px, transparent 1px);
+  background-size: 56px 56px;
+  min-height: 100vh;
+}
+
+/* Header: deep water with a faint compass ring */
+header {
+  position: relative;
+  overflow: hidden;
+  background: var(--deep-sea);
+  color: #f2f7f8;
+  padding: 2.5rem 1.5rem 2rem;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  right: -90px;
+  top: -90px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 36px rgba(255, 255, 255, 0.03),
+              inset 0 0 0 37px rgba(255, 255, 255, 0.14);
+}
+
+header h1 {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Search controls */
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+}
+
+#controls label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+#country {
+  flex: 1 1 240px;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--table-bg);
+  border: 2px solid var(--deep-sea);
+  border-radius: 2px;
+}
+
+#country::placeholder { color: var(--ink-soft); }
+
+button {
+  padding: 0.7rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 2px solid var(--deep-sea);
+}
+
+#lookup {
+  background: var(--deep-sea);
+  color: #f2f7f8;
+}
+
+#lookup-cities {
+  background: var(--shallows);
+  border-color: var(--shallows);
+  color: #fff;
+}
+
+button:hover { filter: brightness(1.15); }
+
+#country:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--buoy);
+  outline-offset: 2px;
+}
+
+/* Results table, styled like a chart legend */
+#result {
+  background: var(--table-bg);
+  border-top: 6px solid var(--deep-sea);
+  box-shadow: 0 1px 0 var(--graticule);
+  overflow-x: auto;
+}
+
+#result:empty { display: none; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+th {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  font-weight: 600;
+  color: var(--shallows);
+  border-bottom: 2px solid var(--deep-sea);
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dbe6e9;
+}
+
+tbody tr:last-child td { border-bottom: 0; }
+
+/* orange marker on the row you point at, like a buoy on the chart */
+tbody td:first-child {
+  font-weight: 600;
+  box-shadow: inset 4px 0 0 transparent;
+}
+
+tbody tr:hover td { background: #eef5f6; }
+tbody tr:hover td:first-child { box-shadow: inset 4px 0 0 var(--buoy); }
+
+@media (max-width: 560px) {
+  header { padding: 1.75rem 1rem 1.5rem; }
+  main { padding: 1.25rem 1rem 3rem; }
+  th, td { padding: 0.6rem 0.65rem; font-size: 0.92rem; }
+}
